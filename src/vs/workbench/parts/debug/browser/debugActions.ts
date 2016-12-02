@@ -696,10 +696,7 @@ export class RunAction extends AbstractDebugAction {
 
 	public run(): TPromise<any> {
 		return this.debugService.getConfigurationManager().getConfiguration(this.debugService.getViewModel().selectedConfigurationName).then(configuration => {
-			if (configuration) {
-				configuration.noDebug = true;
-				return this.debugService.createProcess(configuration);
-			}
+			return this.debugService.createProcess(configuration, { noDebug: true });
 		});
 	}
 

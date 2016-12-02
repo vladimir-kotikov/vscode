@@ -542,7 +542,7 @@ export class DebugService implements debug.IDebugService {
 		this.model.removeWatchExpressions(id);
 	}
 
-	public createProcess(configurationOrName: debug.IConfig | string): TPromise<any> {
+	public createProcess(configurationOrName: debug.IConfig | string, additionalConfig?: debug.IOptConfig): TPromise<any> {
 		this.removeReplExpressions();
 		const sessionId = generateUuid();
 		this.setStateAndEmit(sessionId, debug.State.Initializing);
@@ -557,10 +557,10 @@ export class DebugService implements debug.IDebugService {
 								return TPromise.wrapError(new Error(nls.localize('compoundMustHaveConfigurationNames', "Compound must have \"configurationNames\" attribute set in order to start multiple configurations.")));
 							}
 
-							return TPromise.join(compound.configurations.map(name => this.createProcess(name)));
+							return TPromise.join(compound.configurations.map(name => this.createProcess(name, additionalConfig)));
 						}
 
-						return this.configurationManager.getConfiguration(configurationOrName).then(configuration => {
+						return this.configurationManager.getConfiguration(configurationOrName, additionalConfig).then(configuration => {
 							if (!configuration) {
 								return this.configurationManager.openConfigFile(false).then(openend => {
 									if (openend) {

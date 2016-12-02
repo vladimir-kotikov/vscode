@@ -285,15 +285,18 @@ export interface IGlobalConfig {
 	configurations: IConfig[];
 }
 
-export interface IEnvConfig {
+export interface IOptConfig {
 	name?: string;
-	type: string;
-	request: string;
 	internalConsoleOptions?: string;
 	preLaunchTask?: string;
 	debugServer?: number;
 	noDebug?: boolean;
 	port?: number;
+}
+
+export interface IEnvConfig extends IOptConfig {
+	type: string;
+	request: string;
 }
 
 export interface IConfig extends IEnvConfig {
@@ -456,8 +459,9 @@ export interface IDebugService {
 
 	/**
 	 * Creates a new debug process. Depending on the configuration will either 'launch' or 'attach'.
+	 * Additional configuration is merged into main config.
 	 */
-	createProcess(configurationOrName: IConfig | string): TPromise<any>;
+	createProcess(configurationOrName: IConfig | string, additionalConfig: IOptConfig): TPromise<any>;
 
 	/**
 	 * Restarts a process or creates a new one if there is no active session.

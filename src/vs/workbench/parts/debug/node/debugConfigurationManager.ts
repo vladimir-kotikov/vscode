@@ -266,7 +266,7 @@ export class ConfigurationManager implements debug.IConfigurationManager {
 		return config.compounds.filter(compound => compound.name === name).pop();
 	}
 
-	public getConfiguration(nameOrConfig: string | debug.IConfig): TPromise<debug.IConfig> {
+	public getConfiguration(nameOrConfig: string | debug.IConfig, additionalConfig?: debug.IOptConfig): TPromise<debug.IConfig> {
 		const config = this.configurationService.getConfiguration<debug.IGlobalConfig>('launch');
 
 		let result: debug.IConfig = null;
@@ -287,6 +287,11 @@ export class ConfigurationManager implements debug.IConfigurationManager {
 		}
 
 		if (result) {
+			// Mix additional config properties
+			if (additionalConfig) {
+				result = objects.mixin(result, additionalConfig, /*overwrite=*/true);
+			}
+
 			// Set operating system specific properties #1873
 			const setOSProperties = (flag: boolean, osConfig: debug.IEnvConfig) => {
 				if (flag && osConfig) {

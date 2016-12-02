@@ -135,9 +135,9 @@ registry.registerWorkbenchAction(new SyncActionDescriptor(FocusReplAction, Focus
 KeybindingsRegistry.registerCommandAndKeybindingRule({
 	id: '_workbench.startDebug',
 	weight: KeybindingsRegistry.WEIGHT.workbenchContrib(0),
-	handler(accessor: ServicesAccessor, configurationOrName: any) {
+	handler(accessor: ServicesAccessor, configurationOrName: any, additionalConfig: any) {
 		const debugService = accessor.get(debug.IDebugService);
-		return debugService.createProcess(configurationOrName);
+		return debugService.createProcess(configurationOrName, additionalConfig);
 	},
 	when: debug.CONTEXT_NOT_IN_DEBUG_MODE,
 	primary: undefined
