@@ -1441,6 +1441,7 @@ export class CommandCenter {
 
 		const config = workspace.getConfiguration('git');
 		const shouldPrompt = config.get<boolean>('confirmSync') === true;
+		// Another conflicting change
 		// This is a test comment to make changes conflicting with
 		// local ones to see how autostash deals with conflicts
 
