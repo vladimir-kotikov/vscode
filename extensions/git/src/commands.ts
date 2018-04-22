@@ -1441,6 +1441,8 @@ export class CommandCenter {
 
 		const config = workspace.getConfiguration('git');
 		const shouldPrompt = config.get<boolean>('confirmSync') === true;
+		// This is a test comment to make changes conflicting with
+		// local ones to see how autostash deals with conflicts
 
 		if (shouldPrompt) {
 			const message = localize('sync is unpredictable', "This action will push and pull commits to and from '{0}/{1}'.", HEAD.upstream.remote, HEAD.upstream.name);
